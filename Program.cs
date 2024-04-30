@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using maintenance_bot;
 
 public class Progam
 {
@@ -16,7 +17,7 @@ public class Progam
         _client = new();
         _client.Log += Log;
 
-        var token = Environment.GetEnvironmentVariable("TOKEN");
+        var token = Config.useCompiledConfig ? Config.token : Environment.GetEnvironmentVariable("TOKEN");
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
 
