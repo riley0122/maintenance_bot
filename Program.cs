@@ -38,6 +38,9 @@ public class Progam
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
 
+        await _client.SetGameAsync("Under maintenance!", null, ActivityType.CustomStatus);
+        await _client.SetStatusAsync(UserStatus.DoNotDisturb);
+
         _client.SlashCommandExecuted += SlashCommandHandler;
 
         await Task.Delay(-1);
