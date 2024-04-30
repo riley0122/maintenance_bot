@@ -12,6 +12,23 @@ public class Progam
         return Task.CompletedTask;
     }
 
+    private static async Task SlashCommandHandler(SocketSlashCommand command)
+    {
+        string? support_url = Config.useCompiledConfig ? Config.guild_url : Environment.GetEnvironmentVariable("GUILD_URL");
+        EmbedFieldBuilder supportField = new EmbedFieldBuilder()
+            .WithName("Support")
+            .WithValue($"If you have any questions or suggestions, join our [support server]({support_url})");
+
+        EmbedBuilder embedBuilder = new EmbedBuilder()
+            .WithCurrentTimestamp()
+            .WithTitle("Under maintenance")
+            .WithDescription("This bot is currently under maintenance!")
+            .AddField(supportField)
+            .WithFooter("Maintenance bot by riley0122");
+
+        await command.RespondAsync(embed: embedBuilder.Build(), ephemeral: true);
+    }
+
     public static async Task Main()
     {
         _client = new();
@@ -20,6 +37,8 @@ public class Progam
         var token = Config.useCompiledConfig ? Config.token : Environment.GetEnvironmentVariable("TOKEN");
         await _client.LoginAsync(TokenType.Bot, token);
         await _client.StartAsync();
+
+        _client.SlashCommandExecuted += SlashCommandHandler;
 
         await Task.Delay(-1);
     }
