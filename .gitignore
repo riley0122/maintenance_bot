@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Removing the launch file with enviroment variables
+Properties/launchSettings.json
